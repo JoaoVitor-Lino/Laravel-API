@@ -24,7 +24,7 @@ class StoreProjectRequest extends FormRequest
         return true;
     }
 
-        /**
+     /**
      * @OA\Property(
      *      title="name",
      *      description="Name of the new User",

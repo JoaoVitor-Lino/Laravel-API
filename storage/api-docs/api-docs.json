@@ -14,11 +14,48 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8000/api/v1",
+            "url": "http://localhost:8000/api/v1/",
             "description": "Demo API Server"
         }
     ],
     "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Login para gerar o token",
+                "operationId": "4a03b1b55f42533b0d146398e7f34de2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Donec sollicitudin molestie malesuada.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
         "/index": {
             "get": {
                 "tags": [
@@ -44,7 +81,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         },
         "/show/{id}": {
@@ -86,7 +128,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         },
         "/store": {
@@ -127,7 +174,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         },
         "/update/{id}": {
@@ -182,7 +234,12 @@
                     "404": {
                         "description": "Resource Not Found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         },
         "/destroy/{id}": {
@@ -222,12 +279,39 @@
                     "404": {
                         "description": "Resource Not Found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         }
     },
     "components": {
         "schemas": {
+            "LoginRequest": {
+                "title": "Login Request",
+                "description": "Login request body data",
+                "required": [
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "title": "email",
+                        "description": "email of user",
+                        "type": "string",
+                        "example": "teste@gmail.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "password of user",
+                        "type": "string",
+                        "example": "@Mudar123"
+                    }
+                },
+                "type": "object"
+            },
             "StoreProjectRequest": {
                 "title": "Store Project request",
                 "description": "Store Project request body data",
@@ -313,6 +397,28 @@
                     "name": "Project"
                 }
             },
+            "User": {
+                "title": "User",
+                "description": "User model",
+                "properties": {
+                    "email": {
+                        "title": "email",
+                        "description": "email of the user",
+                        "type": "string",
+                        "example": "teste@gmail.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "Password of the user",
+                        "type": "string",
+                        "example": "@Mudar123.com"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            },
             "ProjectResource": {
                 "title": "ProjectResource",
                 "description": "Project resource",
@@ -330,6 +436,30 @@
                 "xml": {
                     "name": "ProjectResource"
                 }
+            },
+            "UserResource": {
+                "title": "UserResource",
+                "description": "User resource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UserResource"
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "http",
+                "scheme": "bearer"
             }
         }
     },

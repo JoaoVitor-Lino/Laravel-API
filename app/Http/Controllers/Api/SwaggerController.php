@@ -23,7 +23,11 @@ use Illuminate\Http\Request;
      *      url=L5_SWAGGER_CONST_HOST,
      *      description="Demo API Server"
      * )
-        
+     * @OA\SecurityScheme(
+     *      securityScheme="bearer_token",
+     *      type="http",
+     *      scheme="bearer"
+     * )
      *
      * @OA\Tag(
      *     name="Projects",
