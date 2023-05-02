@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
- /**
+    /**
      * @OA\Info(
      *      version="1.0.0",
      *      title="Laravel OpenApi Demo Documentation",

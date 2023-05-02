@@ -28,14 +28,14 @@ Route::prefix('auth')->group(function() {
 });
 
 
-Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1\Admin'], function () {
+Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1\Admin', 'middleware' => 'ApiDocumentationAuthCheck'], function () {
     Route::post('login', [ProjectsApiController::class, 'login']);
     // Projects
-    Route::get('index', [ProjectsApiController::class, 'index'])->middleware('auth:sanctum');
-    Route::get('show/{id}', [ProjectsApiController::class, 'show'])->middleware('auth:sanctum');
-    Route::post('store', [ProjectsApiController::class, 'store'])->middleware('auth:sanctum');
-    Route::put('update/{id}', [ProjectsApiController::class, 'update'])->middleware('auth:sanctum');
-    Route::delete('destroy/{id}', [ProjectsApiController::class, 'destroy'])->middleware('auth:sanctum');
+    Route::get('index', [ProjectsApiController::class, 'index']);
+    Route::get('show/{id}', [ProjectsApiController::class, 'show']);
+    Route::post('store', [ProjectsApiController::class, 'store']);
+    Route::put('update/{id}', [ProjectsApiController::class, 'update']);
+    Route::delete('destroy/{id}', [ProjectsApiController::class, 'destroy']);
     
 });
 

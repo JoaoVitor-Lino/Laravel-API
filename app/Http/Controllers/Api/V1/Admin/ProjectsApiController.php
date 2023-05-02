@@ -8,6 +8,7 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Resources\Admin\ProjectResource;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -82,7 +83,9 @@ class ProjectsApiController extends Controller
     
    public function index()
    {
-      return new ProjectResource(Project::All());
+      $projects = Project::paginate();
+      
+      return ProjectResource::collection($projects);
    }
 
    /**
@@ -125,7 +128,7 @@ class ProjectsApiController extends Controller
    public function show($id)
    {
       
-      $project = Project::find($id);
+      $project = Project::findOrFail($id);
       
       return new ProjectResource($project);
    }
@@ -170,7 +173,7 @@ class ProjectsApiController extends Controller
 
         return (new ProjectResource($project))
         ->response()
-        ->setStatusCode(Response::HTTP_CREATED);;   
+        ->setStatusCode(Response::HTTP_CREATED);
    }
 
     /**
